@@ -4,10 +4,10 @@ use serde::{Deserialize, Serialize};
 
 #[derive(PartialEq, Eq, Hash, Debug, Serialize, Deserialize)]
 enum Types {
-    TypeDefType(TypeDefType),
-    StructType(StructType),
-    EnumType(EnumType),
-    UnionType(UnionType),
+    TypeDef(TypeDefType),
+    Struct(StructType),
+    Enum(EnumType),
+    Union(UnionType),
 }
 
 #[derive(PartialEq, Eq, Hash, Debug, Serialize, Deserialize)]
@@ -94,7 +94,7 @@ fn parse_typedef(entity: &Entity, types: &mut Vec<Types>) {
         .get_typedef_underlying_type()
         .unwrap()
         .get_display_name();
-    types.push(Types::TypeDefType(TypeDefType { name, underlying }))
+    types.push(Types::TypeDef(TypeDefType { name, underlying }))
 }
 
 fn get_name(entity: &Entity, parent: &Entity) -> Option<String> {
@@ -122,7 +122,7 @@ fn parse_struct(entity: &Entity, parent: &Entity, types: &mut Vec<Types>) {
             })
             .collect();
 
-        types.push(Types::StructType(StructType { name, fields }));
+        types.push(Types::Struct(StructType { name, fields }));
     }
 }
 
@@ -143,7 +143,7 @@ fn parse_enum(entity: &Entity, parent: &Entity, types: &mut Vec<Types>) {
             })
             .collect();
 
-        types.push(Types::EnumType(EnumType { name, fields }));
+        types.push(Types::Enum(EnumType { name, fields }));
     }
 }
 
@@ -159,6 +159,6 @@ fn parse_union(entity: &Entity, parent: &Entity, types: &mut Vec<Types>) {
             })
             .collect();
 
-        types.push(Types::UnionType(UnionType { name, fields }));
+        types.push(Types::Union(UnionType { name, fields }));
     }
 }
